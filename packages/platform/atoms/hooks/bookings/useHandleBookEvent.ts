@@ -97,6 +97,8 @@ export const useHandleBookEvent = ({
         crmAppSlug,
         orgSlug: orgSlug ? orgSlug : undefined,
       };
+      console.log("bookingInput");
+      console.log(bookingInput);
 
       if (isInstantMeeting) {
         handleInstantBooking(mapBookingToMutationInput(bookingInput));

@@ -5,7 +5,6 @@ import type { z } from "zod";
 import { useAtomsContext, useIsPlatform } from "@calcom/atoms/monorepo";
 import type { EventNameObjectType } from "@calcom/core/event";
 import { getEventName } from "@calcom/core/event";
-import getLocationsOptionsForSelect from "@calcom/features/bookings/lib/getLocationOptionsForSelect";
 import DestinationCalendarSelector from "@calcom/features/calendars/DestinationCalendarSelector";
 import useLockedFieldsManager from "@calcom/features/ee/managed-event-types/hooks/useLockedFieldsManager";
 import {
@@ -378,16 +377,16 @@ export const EventAdvancedTab = ({
       <div className="border-subtle space-y-6 rounded-lg border p-6">
         <FormBuilder
           title={t("booking_questions_title")}
-          description={t("booking_questions_description")}
-          addFieldLabel={t("add_a_booking_question")}
+          description="" //{t("booking_questions_description")}
+          addFieldLabel="" //{t("add_a_booking_question")}
           formProp="bookingFields"
           {...shouldLockDisableProps("bookingFields")}
           dataStore={{
             options: {
               locations: {
                 // FormBuilder doesn't handle plural for non-english languages. So, use english(Location) only. This is similar to 'Workflow'
-                source: { label: "Location" },
-                value: getLocationsOptionsForSelect(formMethods.getValues("locations") ?? [], t),
+                source: { label: "" }, //"Location" },
+                value: [], //getLocationsOptionsForSelect(formMethods.getValues("locations") ?? [], t),
               },
             },
           }}

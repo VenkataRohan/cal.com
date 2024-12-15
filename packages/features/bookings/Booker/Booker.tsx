@@ -70,6 +70,8 @@ const BookerComponent = ({
   userLocale,
 }: BookerProps & WrappedBookerProps) => {
   const { t } = useLocale();
+  console.log("bookerForm");
+  // console.log(bookerForm);
 
   const [bookerState, setBookerState] = useBookerStore((state) => [state.state, state.setState], shallow);
   const selectedDate = useBookerStore((state) => state.selectedDate);

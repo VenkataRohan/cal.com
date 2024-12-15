@@ -99,6 +99,9 @@ export const FormBuilder = function FormBuilder({
     name: formProp as unknown as "fields",
   });
 
+  console.log("fields");
+  // console.log(fields);
+
   const [fieldDialog, setFieldDialog] = useState({
     isOpen: false,
     fieldIndex: -1,

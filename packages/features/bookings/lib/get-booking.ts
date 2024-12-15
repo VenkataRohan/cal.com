@@ -104,6 +104,9 @@ export const getBookingWithResponses = <
   booking: T,
   isSeatedEvent?: boolean
 ) => {
+  console.log("booking response");
+  // console.log(booking);
+
   return {
     ...booking,
     responses: isSeatedEvent
@@ -251,6 +254,8 @@ export const getBookingForSeatedEvent = async (uid: string) => {
       seatsPerTimeSlot: true,
     },
   });
+  console.log();
+
   if (!eventType || eventType.seatsPerTimeSlot === null) return null;
 
   const result: GetBookingType = {

@@ -53,6 +53,9 @@ export const useBookingForm = ({
           z.object({}),
     })
     .passthrough();
+  console.log("bookingFormSchema");
+  // console.log(bookingFormSchema);
+  // console.log(event);
 
   type BookingFormValues = {
     locationType?: EventLocationType["type"];
@@ -75,6 +78,8 @@ export const useBookingForm = ({
     prefillFormParams,
     lastBookingResponse,
   });
+  console.log("initialValues");
+  // console.log(initialValues);
 
   const bookingForm = useForm<BookingFormValues>({
     defaultValues: initialValues,
@@ -92,6 +97,10 @@ export const useBookingForm = ({
   useEffect(() => {
     // initialValues would be null initially as the async schema parsing is happening. Let's show the form in first render without any prefill values
     // But ensure that when initialValues is available, the form is reset and rerendered with the prefill values
+    console.log("initialValues use effect");
+    // console.log(initialValues);
+    // console.log(key);
+
     bookingForm.reset(initialValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
@@ -114,6 +123,8 @@ export const useBookingForm = ({
     hasFormErrors: Boolean(bookingForm.formState.errors["globalError"]),
     formErrors: bookingForm.formState.errors["globalError"],
   };
+  console.log("bookingForm lsat return");
+  // console.log(bookingForm.getValues());
 
   return {
     bookingForm,

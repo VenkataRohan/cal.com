@@ -25,13 +25,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
       },
     });
-
+    console.log("after db");
     let credentialExistsWithInputPassword = false;
-
+    console.log("beofre credentialExistsWithUsername");
     const credentialExistsWithUsername = user.credentials.find((credential) => {
+      console.log("1");
       const decryptedCredential = JSON.parse(
         symmetricDecrypt(credential.key?.toString() || "", process.env.CALENDSO_ENCRYPTION_KEY || "")
       );
+      console.log("1");
 
       if (decryptedCredential.username === username) {
         if (decryptedCredential.password === password) {
@@ -40,9 +42,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return true;
       }
     });
-
+    console.log("after credentialExistsWithUsername");
     if (credentialExistsWithInputPassword) return res.status(409).json({ message: "account_already_linked" });
-
+    console.log("apple_caledre");
+    console.log(username, password);
     const data = {
       type: "apple_calendar",
       key: symmetricEncrypt(
@@ -55,6 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       invalid: false,
     };
 
+    console.log("CalendarService");
     try {
       const dav = new CalendarService({
         id: 0,
@@ -62,6 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         user: { email: user.email },
       });
       await dav?.listCalendars();
+      console.log("dav");
       await prisma.credential.upsert({
         where: {
           id: credentialExistsWithUsername?.id ?? -1,

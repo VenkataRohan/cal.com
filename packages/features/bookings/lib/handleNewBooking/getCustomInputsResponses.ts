@@ -27,6 +27,9 @@ function mapResponsesToCustomInputs(
   eventTypeCustomInputs: getEventTypeResponse["customInputs"]
 ): NonNullable<CalendarEvent["customInputs"]> {
   // Backward Compatibility: Map new `responses` to old `customInputs` format so that webhooks can still receive same values.
+  console.log("mapResponsesToCustomInputs");
+  // console.log(responses);
+
   return Object.entries(responses).reduce((acc, [fieldName, fieldValue]) => {
     const foundInput = eventTypeCustomInputs.find((input) => slugify(input.label) === fieldName);
     if (foundInput) {

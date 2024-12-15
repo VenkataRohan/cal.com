@@ -3,6 +3,9 @@ import { post } from "@calcom/lib/fetch-wrapper";
 import type { BookingCreateBody, BookingResponse } from "../types";
 
 export const createBooking = async (data: BookingCreateBody) => {
+  console.log("createBooking");
+  // console.log(data);
+
   const response = await post<
     BookingCreateBody,
     // fetch response can't have a Date type, it must be a string

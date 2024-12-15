@@ -52,6 +52,9 @@ export const BookEventForm = ({
   };
   rescheduleUid: string | null;
 }) => {
+  console.log("bookingForm");
+  // console.log(bookingForm);
+
   const eventType = eventQuery.data;
   const setFormValues = useBookerStore((state) => state.setFormValues);
   const bookingData = useBookerStore((state) => state.bookingData);
@@ -96,6 +99,8 @@ export const BookEventForm = ({
           // still exist. This gets cleared when the form is submitted.
           const values = bookingForm.getValues();
           setFormValues(values);
+          console.log("values");
+          console.log(values);
         }}
         form={bookingForm}
         handleSubmit={onSubmit}

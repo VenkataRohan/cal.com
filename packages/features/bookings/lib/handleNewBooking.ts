@@ -148,6 +148,8 @@ const getEventType = async ({
   // handle dynamic user
   const eventType =
     !eventTypeId && !!eventTypeSlug ? getDefaultEvent(eventTypeSlug) : await getEventTypesFromDB(eventTypeId);
+  console.log("eventType read");
+  // console.log(eventType);
 
   const isOrgTeamEvent = !!eventType?.team && !!eventType?.team?.parentId;
 

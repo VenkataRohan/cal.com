@@ -54,14 +54,14 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
             )}
             <hr className="mx-2 bg-black text-black" />
             <div className="mx-2 my-7 flex flex-col gap-y-3">
-              <div className="flex gap-[70px]">
+              {/* <div className="flex gap-[70px]">
                 <div>
                   <h4>What</h4>
                 </div>
                 <div>
                   <p>{booking.title}</p>
                 </div>
-              </div>
+              </div> */}
               <div className="flex gap-[70px]">
                 <div>
                   <h4>When</h4>
@@ -86,7 +86,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                 </div>
               </div>
               <div className="flex gap-[70px]">
-                <div>Who</div>
+                {/* <div>Who</div> */}
                 <div>
                   <div>
                     <div>
@@ -108,7 +108,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                   })}
                 </div>
               </div>
-              {!!booking.location && (
+              {/* {!!booking.location && (
                 <div className="flex gap-[70px]">
                   <div>
                     <h4>Where</h4>
@@ -117,7 +117,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                     <p>{booking.location}</p>
                   </div>
                 </div>
-              )}
+              )} */}
               {!!booking.bookingFieldsResponses?.notes && (
                 <div className="flex gap-[70px]">
                   <div className="w-[40px]">

@@ -58,12 +58,17 @@ export async function getBookingData<T extends z.ZodType>({
     throw new Error("`responses` must not be nullish");
   }
   const responses = reqBody.responses;
+  console.log();
 
   const { userFieldsResponses: calEventUserFieldsResponses, responses: calEventResponses } =
     getCalEventResponses({
       bookingFields: eventType.bookingFields,
       responses,
     });
+  console.log("calEventUserFieldsResponses");
+  // console.log(responses);
+  // console.log(calEventUserFieldsResponses);
+
   return {
     ...reqBody,
     name: responses.name,

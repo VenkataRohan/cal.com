@@ -39,6 +39,7 @@ export function useInitialFormValues({
   const [initialValues, setDefaultValues] = useState<{
     responses?: Partial<z.infer<ReturnType<typeof getBookingResponsesSchema>>>;
     bookingId?: number;
+    responseArr?: any[];
   }>({});
   const bookingData = useBookerStore((state) => state.bookingData);
   const formValues = useBookerStore((state) => state.formValues);
@@ -48,15 +49,19 @@ export function useInitialFormValues({
         setDefaultValues(formValues);
         return;
       }
-
       if (!eventType?.bookingFields) {
         return {};
       }
+      console.log("eventType.bookingFields");
+      console.log(eventType.bookingFields);
+      console.log(formValues);
+      console.log(prefillFormParams);
       const querySchema = getBookingResponsesPartialSchema({
         bookingFields: eventType.bookingFields,
         view: rescheduleUid ? "reschedule" : "booking",
       });
-
+      console.log("querySchema");
+      console.log(querySchema);
       const parsedQuery = await querySchema.parseAsync({
         ...extraOptions,
         name: prefillFormParams.name,
@@ -64,6 +69,9 @@ export function useInitialFormValues({
         // `guests` because the `name` of the corresponding bookingField is `guests`
         guests: prefillFormParams.guests,
       });
+      console.log("parsedQuery");
+      console.log(parsedQuery);
+
       const parsedLastBookingResponse = z.record(z.any()).nullish().parse(lastBookingResponse);
 
       const defaultUserValues = {
@@ -84,14 +92,37 @@ export function useInitialFormValues({
       if (!isRescheduling) {
         const defaults = {
           responses: {} as Partial<z.infer<ReturnType<typeof getBookingResponsesSchema>>>,
+          responseArr: [] as any,
         };
+        // const obj = {}
+        // eventType.bookingFields.forEach(field =>{
+        //   obj[field.name] = parsedQuery[field.name]
+        // })
 
         const responses = eventType.bookingFields.reduce((responses, field) => {
+          defaults.responseArr.push(field.name);
           return {
             ...responses,
             [field.name]: parsedQuery[field.name] || undefined,
           };
         }, {});
+
+        // const responsesMap = eventType.bookingFields.reduce((acc, field) => {
+        //   acc.set(field.name, parsedQuery[field.name] || undefined);
+        //   return acc;
+        // }, new Map());
+
+        // const responses = Object.fromEntries(responsesMap)
+        // console.log(responsesMap);
+
+        console.log("responses 1234");
+        console.log(eventType.bookingFields);
+
+        // console.log(Object.fromEntries(responsesMap));
+        console.log(responses);
+
+        // console.log('obj');
+        // console.log(obj);
 
         defaults.responses = {
           ...responses,
@@ -112,6 +143,8 @@ export function useInitialFormValues({
         responses: {} as Partial<z.infer<ReturnType<typeof getBookingResponsesSchema>>>,
         bookingId: bookingData?.id,
       };
+      console.log("eventType.bookingFields");
+      console.log(eventType.bookingFields);
 
       const responses = eventType.bookingFields.reduce((responses, field) => {
         return {

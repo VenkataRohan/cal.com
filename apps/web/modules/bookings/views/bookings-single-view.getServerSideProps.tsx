@@ -67,6 +67,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (maybeBookingUidFromSeat.seatReferenceUid) seatReferenceUid = maybeBookingUidFromSeat.seatReferenceUid;
 
   const { bookingInfoRaw, bookingInfo } = await getBookingInfo(uid);
+  console.log("bookingInfo server");
+  // console.log(bookingInfo);
 
   if (!bookingInfoRaw) {
     return {
@@ -85,6 +87,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const eventTypeRaw = !bookingInfoRaw.eventTypeId
     ? getDefaultEvent(eventTypeSlug || "")
     : await getEventTypesFromDB(bookingInfoRaw.eventTypeId);
+
+  console.log("eventTypeRaw");
+  console.log(eventTypeRaw);
+
   if (!eventTypeRaw) {
     return {
       notFound: true,
@@ -113,6 +119,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       ...eventTypeRaw.owner,
     });
   }
+  const ii = eventTypeRaw.bookingFields.map((field) => {
+    return {
+      ...field,
+      label: field.type === "boolean" ? markdownToSafeHTML(field.label || "") : field.label || "",
+      defaultLabel:
+        field.type === "boolean" ? markdownToSafeHTML(field.defaultLabel || "") : field.defaultLabel || "",
+    };
+  });
+
+  console.log("eventTypeRaw.bookingFields.map");
+  console.log(ii);
 
   const eventType = {
     ...eventTypeRaw,
@@ -121,16 +138,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     metadata: EventTypeMetaDataSchema.parse(eventTypeRaw.metadata),
     recurringEvent: parseRecurringEvent(eventTypeRaw.recurringEvent),
     customInputs: customInputSchema.array().parse(eventTypeRaw.customInputs),
-    bookingFields: eventTypeRaw.bookingFields.map((field) => {
-      return {
-        ...field,
-        label: field.type === "boolean" ? markdownToSafeHTML(field.label || "") : field.label || "",
-        defaultLabel:
-          field.type === "boolean" ? markdownToSafeHTML(field.defaultLabel || "") : field.defaultLabel || "",
-      };
-    }),
+    bookingFields: ii,
   };
-
   const profile = {
     name: eventType.team?.name || eventType.users[0]?.name || null,
     email: eventType.team ? null : eventType.users[0].email || null,
@@ -177,6 +186,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       }
     }
   }
+  console.log("eventType last return");
+  console.log(eventType);
+  console.log(bookingInfo);
 
   const { currentOrgDomain } = orgDomainConfig(context.req);
   return {

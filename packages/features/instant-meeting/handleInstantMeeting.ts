@@ -235,6 +235,8 @@ async function handler(req: NextApiRequest) {
       meetingUrl: calVideoMeeting.url,
     },
   ];
+  console.log("reqBody.responses");
+  console.log(reqBody.responses);
 
   // Create Partial
   const newBookingData: Prisma.BookingCreateInput = {
@@ -269,6 +271,7 @@ async function handler(req: NextApiRequest) {
     },
     data: newBookingData,
   };
+  console.log("createBookingObj");
 
   const newBooking = await prisma.booking.create(createBookingObj);
 

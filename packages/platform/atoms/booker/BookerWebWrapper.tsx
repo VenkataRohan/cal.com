@@ -98,6 +98,11 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     prefillFormParams,
     lastBookingResponse,
   });
+
+  console.log("bookerForm test");
+  // console.log(bookerForm.bookingForm.getValues());
+  // console.log(bookerForm.bookingForm.getValues.toString());
+
   const calendars = useCalendars({ hasSession });
   const verifyEmail = useVerifyEmail({
     email: bookerForm.formEmail,

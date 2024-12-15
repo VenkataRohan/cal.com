@@ -316,6 +316,9 @@ export default function Success(props: PageProps) {
       return t(`needs_to_be_confirmed_or_rejected${titleSuffix}`);
     }
     if (bookingInfo.user) {
+      console.log("bookingInfo");
+      // console.log(bookingInfo);
+
       const isHost = bookingInfo.user.id === session?.user?.id;
       const isAttendee = bookingInfo.attendees.find((attendee) => attendee.email === session?.user?.email);
       const attendee = bookingInfo.attendees[0]?.name || bookingInfo.attendees[0]?.email || "Nameless";
@@ -651,8 +654,20 @@ export default function Success(props: PageProps) {
                         )}
                       </div>
                       <div className="text-bookingdark dark:border-darkgray-200 mt-8 text-left dark:text-gray-300">
-                        {Object.entries(bookingInfo.responses).map(([name, response]) => {
-                          const field = eventType.bookingFields.find((field) => field.name === name);
+                        {/* {Object.entries(bookingInfo.responses).map(([name, response]) => { */}
+                        {/* const field = eventType.bookingFields.find((field) => field.name === name); */}
+                        {eventType.bookingFields.map((field) => {
+                          if (!bookingInfo.responses[field.name]) {
+                            return null;
+                          }
+                          const name = field.name;
+                          console.log(name);
+
+                          console.log(bookingInfo.responses[field.name]);
+
+                          const response = bookingInfo.responses[field.name];
+                          console.log(response);
+
                           // We show location in the "where" section
                           // We show Booker Name, Emails and guests in Who section
                           // We show notes in additional notes section
